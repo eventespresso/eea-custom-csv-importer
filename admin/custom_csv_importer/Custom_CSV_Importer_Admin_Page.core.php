@@ -115,16 +115,22 @@ class Custom_CSV_Importer_Admin_Page extends EE_Admin_Page {
             )
             . $form->get_html_and_js()
             . $form->form_close();
-		$this->display_admin_page_with_sidebar();
+		$this->display_admin_page_with_no_sidebar();
 	}
     protected function _import_now(){
         $form = new EventEspresso\CustomCSVImporter\core\forms\SubmissionForm();
         $form->receive_form_submission( $_REQUEST );
         if($form->is_valid()){
-            $data = EE_CSV::instance()->import_csv_to_multi_dimensional_array( $form->get_input_value('file_path'));
-            var_dump($data);die;
+            wp_redirect(EE_Admin_Page::add_query_args_and_nonce(array(
+                'page'        => 'espresso_batch',
+                'batch'       => EED_Batch::batch_job,
+                'file_path'      => $form->get_input_value('file_path'),
+                'job_handler' => urlencode('EventEspresso\CustomCSVImporter\core\batch\JobHandlers\TexasBlackTieAndBootsCSVImport'),
+                'return_url'  => urlencode(EE_CUSTOM_CSV_IMPORTER_ADMIN_URL),
+            )));
+            die;
         }else{
-            echo "invalid!";die;
+            $this->redirect_after_action(false, 'form', 'processed', array( 'action' => 'default' ) );
         }
     }
 
