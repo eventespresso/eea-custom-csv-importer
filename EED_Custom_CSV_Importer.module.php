@@ -39,6 +39,7 @@ class EED_Custom_CSV_Importer extends EED_Module {
 	  */
 	 public static function set_hooks() {
 		 EE_Config::register_route( 'custom_csv_importer', 'EED_Custom_CSV_Importer', 'run' );
+         self::set_hooks_both();
 	 }
 
 	 /**
@@ -51,9 +52,32 @@ class EED_Custom_CSV_Importer extends EED_Module {
 		 // ajax hooks
 		 add_action( 'wp_ajax_get_custom_csv_importer', array( 'EED_Custom_CSV_Importer', 'get_custom_csv_importer' ));
 		 add_action( 'wp_ajax_nopriv_get_custom_csv_importer', array( 'EED_Custom_CSV_Importer', 'get_custom_csv_importer' ));
+         self::set_hooks_both();
 	 }
 
-	 public static function get_custom_csv_importer(){
+
+
+    /**
+     * Hooks to run on both frontend and backend requests
+     */
+	 public static function set_hooks_both(){
+         add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
+         add_filter('upload_mimes', array( 'EED_Custom_CSV_Importer', 'allow_csv_uploads'), 30 );
+     }
+
+
+
+    /**
+     * Filters the list of file types allowed for uploading via the media uploader.
+     * Adds csv files to that list.
+     */
+     public static function allow_csv_uploads ( $mime_types = array() ) {
+         $mime_types['csv']  = 'text/csv';
+         return $mime_types;
+     }
+
+
+public static function get_custom_csv_importer(){
 		 echo wp_json_encode( array( 'response' => 'ok', 'details' => 'you have made an ajax request!') );
 		 die;
 	 }

@@ -132,7 +132,7 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
         }else{
             $grand_total_li = $transaction->total_line_item();
         }
-        $ticket = $this->findOrCreateTicket($cols_n_values['Event Fee Name']);
+        $ticket = $this->findOrCreateTicket($cols_n_values['Ticket Name']);
         $line_item = \EEH_Line_Item::add_ticket_purchase($grand_total_li, $ticket);
         $attendee_data = array(
             'ATT_fname' => $cols_n_values['Badge First Name'],
@@ -205,47 +205,62 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
         );
         $reg_payment->save();
         //add answer?
-        if( isset( $cols_n_values['Are you 21 or older?'] ) ) {
+        if(isset( $cols_n_values['Are you 21 or older?'])){
             $answer = \EE_Answer::new_instance(
                 array(
                     'ANS_value' => $cols_n_values['Are you 21 or older?'],
-                    'QST_ID'    => $this->findOrCreateAgeQuestionID(),
+                    'QST_ID'    => \EEM_Question::instance()->get_var(
+                        array(
+                            array(
+                                'QST_admin_label' => 'are-you-21-or-older'
+                            ),
+                            'limit' => 1
+                        )
+                    ),
                     'REG_ID'    => $reg->ID()
                 )
             );
             $answer->save();
         }
-        //enqueue message?
-    }
-
-    protected function findOrCreateAgeQuestionID(){
-        $question_id = \EEM_Question::instance()->get_var(
-            array(
+        if( isset( $cols_n_values['Table Number'])){
+            $answer = \EE_Answer::new_instance(
                 array(
-                    'QST_display_text' => 'Are you 21 or older?',
-                    'QST_admin_label' => 'are-you-21-or-older'
-                ),
-                'limit' => 1
-            )
-        );
-        if( ! $question_id ) {
-            $question = \EE_Question::new_instance(
-                array(
-                    'QST_display_text' => 'Are you 21 or older?',
-                    'QST_admin_label' => 'are-you-21-or-older',
-
+                    'ANS_value' => $cols_n_values['Table Number'],
+                    'QST_ID'    => \EEM_Question::instance()->get_var(
+                        array(
+                            array(
+                                'QST_admin_label' => 'table-name'
+                            ),
+                            'limit' => 1
+                        )
+                    ),
+                    'REG_ID'    => $reg->ID()
                 )
             );
-            $question->save();
-            $question_id = $question->ID();
+            $answer->save();
         }
-        return $question_id;
+        //enqueue messages for General Admission primary registrants
+        if($other_regs_on_txn === 0
+        && $ticket->name() === 'General Admission'){
+            $data = array($reg, \EEM_Registration::status_id_approved);
+            try {
+                $message_processor = \EE_Registry::instance()->load_lib( 'Messages_Processor' );
+                $messages_to_generate = $message_processor->setup_mtgs_for_all_active_messengers( 'ticket_notice', $data );
+                $message_processor->batch_queue_for_generation_and_persist( $messages_to_generate );
+                $message_processor->get_queue()->initiate_request_by_priority();
+            } catch( \EE_Error $e ) {
+                //do whatever error handling is necessary in here.  Maybe log the fails so we know what registrations didn't get added to the queue?
+                error_log( 'Error sending message for registration ' . $reg->ID() . '. The error was ' . $e->getMessage() . ', with stack trace: ' . $e->getTraceAsString());
+            }
+        }
     }
+
     protected function findOrCreateTicket($ticket_name){
         $ticket = \EEM_Ticket::instance()->get_one(
             array(
                 array(
-                    'TKT_name' => $ticket_name
+                    'TKT_name' => $ticket_name,
+                    'Datetime.Event.status' => \EEM_CPT_Base::post_status_publish
                 )
             )
         );
