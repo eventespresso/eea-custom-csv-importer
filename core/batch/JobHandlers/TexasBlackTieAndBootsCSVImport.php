@@ -135,7 +135,20 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
         }else{
             $grand_total_li = $transaction->total_line_item();
         }
-        $ticket = $this->findOrCreateTicket($cols_n_values['Ticket Name']);
+        $ticket_name = trim($cols_n_values['Ticket Name']);
+        $ticket = \EEM_Ticket::instance()->get_one(
+            array(
+                array(
+                    'TKT_name' => $ticket_name,
+                    'Datetime.Event.status' => \EEM_CPT_Base::post_status_publish
+                )
+            )
+        );
+        if( ! $ticket instanceof \EE_Ticket ) {
+            error_log('Could not find ticket with name ' . $ticket_name);
+            //if we couldn't find the ticket, we just got to skip this row I guess. We recorded it
+            return;
+        }
         $line_item = \EEH_Line_Item::add_ticket_purchase($grand_total_li, $ticket);
         $attendee_data = array(
             'ATT_fname' => $cols_n_values['Badge First Name'],
@@ -257,40 +270,6 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
                 error_log( 'Error sending message for registration ' . $reg->ID() . '. The error was ' . $e->getMessage() . ', with stack trace: ' . $e->getTraceAsString());
             }
         }
-    }
-
-    protected function findOrCreateTicket($ticket_name){
-        $ticket = \EEM_Ticket::instance()->get_one(
-            array(
-                array(
-                    'TKT_name' => $ticket_name,
-                    'Datetime.Event.status' => \EEM_CPT_Base::post_status_publish
-                )
-            )
-        );
-        if( ! $ticket instanceof \EE_Ticket ) {
-            $ticket = \EE_Ticket::new_instance(
-                array(
-                    'TKT_name' => $ticket_name
-                )
-            );
-            $ticket->save();
-            $event = \EE_Event::new_instance(
-                array(
-                    'EVT_name' => 'Auto-created',
-                    'status' => \EEM_CPT_Base::post_status_publish
-                )
-            );
-            $event->save();
-            $datetime = \EE_Datetime::new_instance(
-                array(
-                    'EVT_ID' => $event->ID(),
-                )
-            );
-            $datetime->save();
-            $ticket->_add_relation_to($datetime, 'Datetime');
-        }
-        return $ticket;
     }
 
     public function cleanup_job(JobParameters $job_parameters)
