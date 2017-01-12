@@ -242,7 +242,7 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
         //enqueue messages for General Admission primary registrants
         if($other_regs_on_txn === 0
         && $ticket->name() === 'General Admission'){
-            $data = array($reg, \EEM_Registration::status_id_approved);
+            $data = array($transaction, null, \EEM_Registration::status_id_approved);
             try {
                 $message_processor = \EE_Registry::instance()->load_lib( 'Messages_Processor' );
                 $messages_to_generate = $message_processor->setup_mtgs_for_all_active_messengers( 'ticket_notice', $data );

@@ -61,7 +61,9 @@ class EED_Custom_CSV_Importer extends EED_Module {
      * Hooks to run on both frontend and backend requests
      */
 	 public static function set_hooks_both(){
-         add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
+         //while running the importer, we don't want to send messages (because we'd like to verify they're a-ok)
+         //so just turn off this plugin once importing is done, and then messages will begin to send
+	     add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
          add_filter('upload_mimes', array( 'EED_Custom_CSV_Importer', 'allow_csv_uploads'), 30 );
      }
 
