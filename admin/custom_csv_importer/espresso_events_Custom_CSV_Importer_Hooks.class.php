@@ -6,13 +6,13 @@
  * Commenting/docs common to all children classes is found in the EE_Admin_Hooks parent.
  *
  *
- * @package			espresso_events_Custom_CSV_Importer_Hooks
- * @subpackage		wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/espresso_events_Custom_CSV_Importer_Hooks.class.php
+ * @package			espresso_events_Custom_Csv_Importer_Hooks
+ * @subpackage		wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/espresso_events_Custom_Csv_Importer_Hooks.class.php
  * @author				Darren Ethier
  *
  * ------------------------------------------------------------------------
  */
-class espresso_events_Custom_CSV_Importer_Hooks extends EE_Admin_Hooks {
+class espresso_events_Custom_Csv_Importer_Hooks extends EE_Admin_Hooks {
 
 	protected function _set_hooks_properties() {
         $this->_name = 'custom_csv_importer';
@@ -23,5 +23,5 @@ class espresso_events_Custom_CSV_Importer_Hooks extends EE_Admin_Hooks {
 	public function _redirect_action_early_insert_category( $redirection_query_args ) { }
 
 }
-// End of file espresso_events_Custom_CSV_Importer_Hooks.class.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/espresso_events_Custom_CSV_Importer_Hooks.class.php
+// End of file espresso_events_Custom_Csv_Importer_Hooks.class.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/espresso_events_Custom_Csv_Importer_Hooks.class.php

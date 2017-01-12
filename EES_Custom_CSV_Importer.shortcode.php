@@ -1,6 +1,6 @@
 <?php if ( ! defined( 'EVENT_ESPRESSO_VERSION' )) { exit(); }
 /*
- * EES_Custom_CSV_Importer
+ * EES_Custom_Csv_Importer
  *
  * @package			Event Espresso
  * @subpackage		eea-custom-csv-importer
@@ -9,7 +9,7 @@
  *
  * ------------------------------------------------------------------------
  */
-class EES_Custom_CSV_Importer  extends EES_Shortcode {
+class EES_Custom_Csv_Importer  extends EES_Shortcode {
 
 
 
@@ -55,11 +55,11 @@ class EES_Custom_CSV_Importer  extends EES_Shortcode {
 	 *  @return 	void
 	 */
 	public function run( WP $WP ) {
-		// this will trigger the EED_Custom_CSV_Importer module's run() method during the pre_get_posts hook point,
+		// this will trigger the EED_Custom_Csv_Importer module's run() method during the pre_get_posts hook point,
 		// this allows us to initialize things, enqueue assets, etc,
 		// as well, this saves an instantiation of the module in an array, using 'custom_csv_importer' as the key, so that we can retrieve it
 		EE_Registry::instance()->REQ->set( 'ee', 'custom_csv_importer' );
-		EED_Custom_CSV_Importer::$shortcode_active = TRUE;
+		EED_Custom_Csv_Importer::$shortcode_active = TRUE;
 	}
 
 
@@ -85,5 +85,5 @@ class EES_Custom_CSV_Importer  extends EES_Shortcode {
 
 
 }
-// End of file EES_Custom_CSV_Importer.shortcode.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/EES_Custom_CSV_Importer.shortcode.php
+// End of file EES_Custom_Csv_Importer.shortcode.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/EES_Custom_Csv_Importer.shortcode.php

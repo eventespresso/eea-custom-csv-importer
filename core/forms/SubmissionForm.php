@@ -1,5 +1,5 @@
 <?php
-namespace EventEspresso\CustomCSVImporter\core\forms;
+namespace EventEspresso\CustomCsvImporter\core\forms;
 /**
  * Created by PhpStorm.
  * User: mnelson4

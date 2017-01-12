@@ -24,6 +24,6 @@ class espresso_promotions_tests extends EE_UnitTestCase {
 	 */
 	function test_loading_custom_csv_importer() {
 		$this->assertEquals( has_action('AHEE__EE_System__load_espresso_addons', 'load_espresso_custom_csv_importer'), 10 );
-		$this->assertTrue( class_exists( 'EE_Custom_CSV_Importer' ) );
+		$this->assertTrue( class_exists( 'EE_Custom_Csv_Importer' ) );
 	}
 }

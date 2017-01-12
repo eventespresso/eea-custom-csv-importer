@@ -1,7 +1,7 @@
 <?php if ( ! defined( 'EVENT_ESPRESSO_VERSION' )) { exit(); }
 /*
- * EEW_Custom_CSV_Importer
- * Displays a List of Custom_CSV_Importer in the Sidebar
+ * EEW_Custom_Csv_Importer
+ * Displays a List of Custom_Csv_Importer in the Sidebar
  *
  * @package			Event Espresso
  * @subpackage 	eea-custom-csv-importer
@@ -10,7 +10,7 @@
  *
  * ------------------------------------------------------------------------
  */
-class EEW_Custom_CSV_Importer extends WP_Widget {
+class EEW_Custom_Csv_Importer extends WP_Widget {
 
 	/**
 	 * Register widget with WordPress.
@@ -116,7 +116,7 @@ class EEW_Custom_CSV_Importer extends WP_Widget {
 		if ( isset( $post->post_content )) {
 			 // check the post content for the short code
 			 if ( strpos( $post->post_content, '[ESPRESSO_CUSTOM_CSV_IMPORTER') === FALSE ) {
-				 EED_Custom_CSV_Importer::$shortcode_active = TRUE;
+				 EED_Custom_Csv_Importer::$shortcode_active = TRUE;
 				// Before widget (defined by themes).
 				echo $args['before_widget'];
 				// Title of widget (before and after defined by themes).
@@ -125,10 +125,10 @@ class EEW_Custom_CSV_Importer extends WP_Widget {
 					echo $args['before_title'] . $title . $args['after_title'];
 				}
 				// load scripts
-				EE_Custom_CSV_Importer::instance()->enqueue_scripts();
+				EE_Custom_Csv_Importer::instance()->enqueue_scripts();
 				// settings
 				$attributes = array();
-				echo EE_Custom_CSV_Importer::instance()->display_custom_csv_importer( $attributes );
+				echo EE_Custom_Csv_Importer::instance()->display_custom_csv_importer( $attributes );
 				// After widget (defined by themes).
 				echo $args['after_widget'];
 			}
@@ -142,5 +142,5 @@ class EEW_Custom_CSV_Importer extends WP_Widget {
 
 }
 
-// End of file EEW_Custom_CSV_Importer.widget.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/EEW_Custom_CSV_Importer.widget.php
+// End of file EEW_Custom_Csv_Importer.widget.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/EEW_Custom_Csv_Importer.widget.php

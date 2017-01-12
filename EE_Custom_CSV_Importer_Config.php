@@ -15,7 +15,7 @@
  */
  /**
  *
- * Class EE_Custom_CSV_Importer_Config
+ * Class EE_Custom_Csv_Importer_Config
  *
  * Description
  *
@@ -26,7 +26,7 @@
  *
  */
 
-class EE_Custom_CSV_Importer_Config extends EE_Config_Base {
+class EE_Custom_Csv_Importer_Config extends EE_Config_Base {
 
 
 
@@ -34,5 +34,5 @@ class EE_Custom_CSV_Importer_Config extends EE_Config_Base {
 
 
 
-// End of file EE_Custom_CSV_Importer_Config.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/EE_Custom_CSV_Importer_Config.php
+// End of file EE_Custom_Csv_Importer_Config.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/EE_Custom_Csv_Importer_Config.php

@@ -1,6 +1,6 @@
 <?php if ( ! defined('EVENT_ESPRESSO_VERSION')) { exit('No direct script access allowed'); }
 /**
- * Class  EED_Custom_CSV_Importer
+ * Class  EED_Custom_Csv_Importer
  * 
  * This is where miscellaneous action and filters callbacks should be setup to
  * do your addon's business logic (that doesn't fit neatly into one of the
@@ -12,7 +12,7 @@
  *
  * ------------------------------------------------------------------------
  */
-class EED_Custom_CSV_Importer extends EED_Module {
+class EED_Custom_Csv_Importer extends EED_Module {
 
 	/**
 	 * @var 		bool
@@ -23,7 +23,7 @@ class EED_Custom_CSV_Importer extends EED_Module {
 
 
 	/**
-	 * @return EED_Custom_CSV_Importer
+	 * @return EED_Custom_Csv_Importer
 	 */
 	public static function instance() {
 		return parent::get_instance( __CLASS__ );
@@ -38,7 +38,7 @@ class EED_Custom_CSV_Importer extends EED_Module {
 	  *  @return 	void
 	  */
 	 public static function set_hooks() {
-		 EE_Config::register_route( 'custom_csv_importer', 'EED_Custom_CSV_Importer', 'run' );
+		 EE_Config::register_route( 'custom_csv_importer', 'EED_Custom_Csv_Importer', 'run' );
          self::set_hooks_both();
 	 }
 
@@ -50,8 +50,8 @@ class EED_Custom_CSV_Importer extends EED_Module {
 	  */
 	 public static function set_hooks_admin() {
 		 // ajax hooks
-		 add_action( 'wp_ajax_get_custom_csv_importer', array( 'EED_Custom_CSV_Importer', 'get_custom_csv_importer' ));
-		 add_action( 'wp_ajax_nopriv_get_custom_csv_importer', array( 'EED_Custom_CSV_Importer', 'get_custom_csv_importer' ));
+		 add_action( 'wp_ajax_get_custom_csv_importer', array( 'EED_Custom_Csv_Importer', 'get_custom_csv_importer' ));
+		 add_action( 'wp_ajax_nopriv_get_custom_csv_importer', array( 'EED_Custom_Csv_Importer', 'get_custom_csv_importer' ));
          self::set_hooks_both();
 	 }
 
@@ -64,7 +64,7 @@ class EED_Custom_CSV_Importer extends EED_Module {
          //while running the importer, we don't want to send messages (because we'd like to verify they're a-ok)
          //so just turn off this plugin once importing is done, and then messages will begin to send
 	     add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
-         add_filter('upload_mimes', array( 'EED_Custom_CSV_Importer', 'allow_csv_uploads'), 30 );
+         add_filter('upload_mimes', array( 'EED_Custom_Csv_Importer', 'allow_csv_uploads'), 30 );
      }
 
 
@@ -89,14 +89,14 @@ public static function get_custom_csv_importer(){
 	/**
 	 *    config
 	 *
-	 * @return EE_Custom_CSV_Importer_Config
+	 * @return EE_Custom_Csv_Importer_Config
 	 */
 	public function config(){
 		// config settings are setup up individually for EED_Modules via the EE_Configurable class that all modules inherit from, so
 		// $this->config();  can be used anywhere to retrieve it's config, and:
 		// $this->_update_config( $EE_Config_Base_object ); can be used to supply an updated instance of it's config object
-		// to piggy back off of the config setup for the base EE_Custom_CSV_Importer class, just use the following (note: updates would have to occur from within that class)
-		return EE_Registry::instance()->addons->EE_Custom_CSV_Importer->config();
+		// to piggy back off of the config setup for the base EE_Custom_Csv_Importer class, just use the following (note: updates would have to occur from within that class)
+		return EE_Registry::instance()->addons->EE_Custom_Csv_Importer->config();
 	}
 
 
@@ -139,11 +139,11 @@ public static function get_custom_csv_importer(){
 		wp_register_script( 'espresso_custom_csv_importer', EE_CUSTOM_CSV_IMPORTER_URL . 'scripts/espresso_custom_csv_importer.js', array( 'jquery' ), EE_CUSTOM_CSV_IMPORTER_VERSION, TRUE );
 
 		// is the shortcode or widget in play?
-		if ( EED_Custom_CSV_Importer::$shortcode_active ) {
+		if ( EED_Custom_Csv_Importer::$shortcode_active ) {
 			wp_enqueue_style( 'espresso_custom_csv_importer' );
 			wp_enqueue_script( 'espresso_custom_csv_importer' );
 		}
 	}
  }
-// End of file EED_Custom_CSV_Importer.module.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/EED_Custom_CSV_Importer.module.php
+// End of file EED_Custom_Csv_Importer.module.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/EED_Custom_Csv_Importer.module.php

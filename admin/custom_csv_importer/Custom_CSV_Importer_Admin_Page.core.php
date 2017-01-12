@@ -1,18 +1,18 @@
 <?php if ( ! defined( 'EVENT_ESPRESSO_VERSION' )) { exit('NO direct script access allowed'); }
 /**
  *
- * Custom_CSV_Importer_Admin_Page
+ * Custom_Csv_Importer_Admin_Page
  *
- * This contains the logic for setting up the Custom_CSV_Importer Addon Admin related pages.  Any methods without PHP doc comments have inline docs with parent class.
+ * This contains the logic for setting up the Custom_Csv_Importer Addon Admin related pages.  Any methods without PHP doc comments have inline docs with parent class.
  *
  *
- * @package			Custom_CSV_Importer_Admin_Page (custom_csv_importer addon)
- * @subpackage 	admin/Custom_CSV_Importer_Admin_Page.core.php
+ * @package			Custom_Csv_Importer_Admin_Page (custom_csv_importer addon)
+ * @subpackage 	admin/Custom_Csv_Importer_Admin_Page.core.php
  * @author				Darren Ethier, Brent Christensen
  *
  * ------------------------------------------------------------------------
  */
-class Custom_CSV_Importer_Admin_Page extends EE_Admin_Page {
+class Custom_Csv_Importer_Admin_Page extends EE_Admin_Page {
 
 
 	protected function _init_page_props() {
@@ -102,7 +102,7 @@ class Custom_CSV_Importer_Admin_Page extends EE_Admin_Page {
 	 * @param $template
 	 */
 	protected function _import_page() {
-		$form = new EventEspresso\CustomCSVImporter\core\forms\SubmissionForm();
+		$form = new EventEspresso\CustomCsvImporter\core\forms\SubmissionForm();
         $form->populate_from_session();
 		$this->_template_args['admin_page_content'] = $form->form_open(
                 EE_Admin_Page::add_query_args_and_nonce(
@@ -118,14 +118,14 @@ class Custom_CSV_Importer_Admin_Page extends EE_Admin_Page {
 		$this->display_admin_page_with_no_sidebar();
 	}
     protected function _import_now(){
-        $form = new EventEspresso\CustomCSVImporter\core\forms\SubmissionForm();
+        $form = new EventEspresso\CustomCsvImporter\core\forms\SubmissionForm();
         $form->receive_form_submission( $_REQUEST );
         if($form->is_valid()){
             wp_redirect(EE_Admin_Page::add_query_args_and_nonce(array(
                 'page'        => 'espresso_batch',
                 'batch'       => EED_Batch::batch_job,
                 'file_path'      => $form->get_input_value('file_path'),
-                'job_handler' => urlencode('EventEspresso\CustomCSVImporter\core\batch\JobHandlers\TexasBlackTieAndBootsCSVImport'),
+                'job_handler' => urlencode('EventEspresso\CustomCsvImporter\core\batch\JobHandlers\TexasBlackTieAndBootsCsvImport'),
                 'return_url'  => urlencode(EE_CUSTOM_CSV_IMPORTER_ADMIN_URL),
             )));
             die;
@@ -140,5 +140,5 @@ class Custom_CSV_Importer_Admin_Page extends EE_Admin_Page {
 	}
 
 }
-// End of file Custom_CSV_Importer_Admin_Page.core.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/Custom_CSV_Importer_Admin_Page.core.php
+// End of file Custom_Csv_Importer_Admin_Page.core.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/Custom_Csv_Importer_Admin_Page.core.php

@@ -1,23 +1,23 @@
 <?php if ( ! defined('EVENT_ESPRESSO_VERSION')) exit('No direct script access allowed');
 /**
 *
-* Custom_CSV_Importer_Admin_Page_Init class
+* Custom_Csv_Importer_Admin_Page_Init class
 *
-* This is the init for the Custom_CSV_Importer Addon Admin Pages.  See EE_Admin_Page_Init for method inline docs.
+* This is the init for the Custom_Csv_Importer Addon Admin Pages.  See EE_Admin_Page_Init for method inline docs.
 *
 * @package			Event Espresso (custom_csv_importer addon)
-* @subpackage		admin/Custom_CSV_Importer_Admin_Page_Init.core.php
+* @subpackage		admin/Custom_Csv_Importer_Admin_Page_Init.core.php
 * @author				Darren Ethier
 *
 * ------------------------------------------------------------------------
 */
-class Custom_CSV_Importer_Admin_Page_Init extends EE_Admin_Page_Init  {
+class Custom_Csv_Importer_Admin_Page_Init extends EE_Admin_Page_Init  {
 
 	/**
 	 * 	constructor
 	 *
 	 * @access public
-	 * @return \Custom_CSV_Importer_Admin_Page_Init
+	 * @return \Custom_Csv_Importer_Admin_Page_Init
 	 */
 	public function __construct() {
 
@@ -68,5 +68,5 @@ class Custom_CSV_Importer_Admin_Page_Init extends EE_Admin_Page_Init  {
 
 
 }
-// End of file Custom_CSV_Importer_Admin_Page_Init.core.php
-// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/Custom_CSV_Importer_Admin_Page_Init.core.php
+// End of file Custom_Csv_Importer_Admin_Page_Init.core.php
+// Location: /wp-content/plugins/eea-custom-csv-importer/admin/custom_csv_importer/Custom_Csv_Importer_Admin_Page_Init.core.php

@@ -1,5 +1,5 @@
 <?php
-/* @var $config EE_Custom_CSV_Importer_Config */
+/* @var $config EE_Custom_Csv_Importer_Config */
 ?>
 <div class="padding">
 	<h4>

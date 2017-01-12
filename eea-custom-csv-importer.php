@@ -64,8 +64,8 @@ add_action( 'activated_plugin', 'espresso_custom_csv_importer_plugin_activation_
 function load_espresso_custom_csv_importer() {
   if ( class_exists( 'EE_Addon' )) {
       // custom_csv_importer version
-      require_once ( plugin_dir_path( __FILE__ ) . 'EE_Custom_CSV_Importer.class.php' );
-      EE_Custom_CSV_Importer::register_addon();
+      require_once ( plugin_dir_path( __FILE__ ) . 'EE_Custom_Csv_Importer.class.php' );
+      EE_Custom_Csv_Importer::register_addon();
   } else {
     add_action( 'admin_notices', 'espresso_custom_csv_importer_activation_error' );
   }

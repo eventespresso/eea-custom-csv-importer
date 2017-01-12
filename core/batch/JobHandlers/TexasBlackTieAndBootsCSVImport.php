@@ -1,5 +1,5 @@
 <?php
-namespace EventEspresso\CustomCSVImporter\core\batch\JobHandlers;
+namespace EventEspresso\CustomCsvImporter\core\batch\JobHandlers;
 use EventEspressoBatchRequest\JobHandlerBaseClasses\JobHandler;
 use EventEspressoBatchRequest\Helpers\BatchRequestException;
 use EventEspressoBatchRequest\Helpers\JobParameters;
@@ -13,7 +13,7 @@ use EventEspresso\core\domain\entities\RegUrlLink;
  * Date: 06/01/2017
  * Time: 11:55 AM
  */
-class TexasBlackTieAndBootsCSVImport extends JobHandler{
+class TexasBlackTieAndBootsCsvImport extends JobHandler{
 
     /**
      * @param JobParameters $job_parameters
@@ -105,7 +105,7 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
      * and creates the necessary transaction, registration, payment, etc. It also sends them a ticket message.
      * Note: if you don't want the messages to be sent right away, set messages to be sent on a separate request
      * (in the dashboard ee messages settings) and add add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
-     * which is currently in-place in EED_Custom_CSV_Importer::set_hooks_both())
+     * which is currently in-place in EED_Custom_Csv_Importer::set_hooks_both())
      * @param $cols_n_values
      */
     protected function processRow($cols_n_values){
