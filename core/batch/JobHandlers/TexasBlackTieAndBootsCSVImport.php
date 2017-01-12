@@ -102,14 +102,17 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
 
     /**
      * Takes a row from the DB, where keys are their column's name, and values are its value in the row
-     * and processes it
+     * and creates the necessary transaction, registration, payment, etc. It also sends them a ticket message.
+     * Note: if you don't want the messages to be sent right away, set messages to be sent on a separate request
+     * (in the dashboard ee messages settings) and add add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
+     * which is currently in-place in EED_Custom_CSV_Importer::set_hooks_both())
      * @param $cols_n_values
      */
     protected function processRow($cols_n_values){
-        //is this is the first registration in this transaction?
-        //if first: create line item(S), transaction, attendee, registration, payment, registration_payment, answers, enqueue message, line items, update ticket and datetime tickets available
+        //stuff to create: line item(S), transaction, attendee, registration, payment, registration_payment, answers, enqueue message, line items, update ticket and datetime tickets available
         $payment_method = \EEM_Payment_Method::instance()->get_one_by_slug('other');
-        //check for a transaction with the CSV's "Registrant ID"
+        //check for a transaction with the CSV's "Registrant ID" in the otherwise unused 'TXN_hash_salt'
+        //(its a bit of a hack. Yes we could alternatively use an extra meta but that's an extra join)
         $csv_reg_id = $cols_n_values['Registrant ID'];
         $transaction = \EEM_Transaction::instance()->get_one(
             array(
@@ -222,6 +225,7 @@ class TexasBlackTieAndBootsCSVImport extends JobHandler{
             );
             $answer->save();
         }
+        //add table number?
         if( isset( $cols_n_values['Table Number'])){
             $answer = \EE_Answer::new_instance(
                 array(
