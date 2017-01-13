@@ -258,7 +258,7 @@ class TexasBlackTieAndBootsCsvImport extends JobHandler{
         }
         //enqueue messages for General Admission primary registrants
         if($other_regs_on_txn === 0
-        && $ticket->name() === 'General Admission'){
+        && $ticket->name() === 'Black Tie & Boots 2017 Presidential Inaugural Ball (General Admission)'){
             $data = array($transaction, null, \EEM_Registration::status_id_approved);
             try {
                 $message_processor = \EE_Registry::instance()->load_lib( 'Messages_Processor' );
