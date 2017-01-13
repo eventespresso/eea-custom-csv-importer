@@ -48,6 +48,10 @@ class Custom_Csv_Importer_Admin_Page extends EE_Admin_Page {
 				'func' => '_import_now',
 				'noheader' => TRUE
 			),
+            'resend_now' => array(
+                'func' => '_resend_now',
+                'noheader' => TRUE
+            ),
 			'usage' => '_usage'
 		);
 	}
@@ -114,7 +118,14 @@ class Custom_Csv_Importer_Admin_Page extends EE_Admin_Page {
                 'post'
             )
             . $form->get_html_and_js()
-            . $form->form_close();
+            . $form->form_close()
+            . '<a href="' . EE_Admin_Page::add_query_args_and_nonce(
+                array(
+                    'action' => 'resend_now'
+                ),
+                EE_CUSTOM_CSV_IMPORTER_ADMIN_URL
+            )
+            . '">Resend Ticket Notices to all Imported Primary Registrants</a>';
 		$this->display_admin_page_with_no_sidebar();
 	}
     protected function _import_now(){
@@ -132,6 +143,16 @@ class Custom_Csv_Importer_Admin_Page extends EE_Admin_Page {
         }else{
             $this->redirect_after_action(false, 'form', 'processed', array( 'action' => 'default' ) );
         }
+    }
+
+    protected function _resend_now(){
+        wp_redirect(EE_Admin_Page::add_query_args_and_nonce(array(
+            'page'        => 'espresso_batch',
+            'batch'       => EED_Batch::batch_job,
+            'job_handler' => urlencode('EventEspresso\CustomCsvImporter\core\batch\JobHandlers\TexasBlackTieAndBootsSendTicketNotices'),
+            'return_url'  => urlencode(EE_CUSTOM_CSV_IMPORTER_ADMIN_URL),
+        )));
+        die;
     }
 
 	protected function _usage() {
