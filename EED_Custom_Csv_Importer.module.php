@@ -65,7 +65,17 @@ class EED_Custom_Csv_Importer extends EED_Module {
          //so just turn off this plugin once importing is done, and then messages will begin to send
 	     add_filter('FHEE__EED_Messages__run_cron__user_wp_cron', '__return_false');
          add_filter('upload_mimes', array( 'EED_Custom_Csv_Importer', 'allow_csv_uploads'), 30 );
+         add_filter('cron_schedules', array('EED_Custom_Csv_Importer','add_more_frequent_cron_schedule') );
      }
+
+    public static function  add_more_frequent_cron_schedule($schedules){
+        if(!isset($schedules["1min"])){
+            $schedules["1min"] = array(
+                'interval' => 60,
+                'display' => __('Once every minute'));
+        }
+        return $schedules;
+    }
 
 
 
