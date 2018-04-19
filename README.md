@@ -1,7 +1,4 @@
-New EE4 Add-on Starter Template
+New EE4 Custom CSV Importer
 =========
-
-A set of files and classes to use as a template for creating a New Event Espresso  Add-on
-
-This plugin/addon needs to be uploaded to the "/wp-content/plugins/" directory on your server or installed using the WordPress plugins installer.
-
+This is a WordPress plugin that extends Event Espresso and imports data from a CSV file in a custom format. It probably won't directly be of too much use to anyone, but it could serve as a basis for other code that wants to import data from a CSV file into Event Espresso.
+This plugin is provided as-is with no warranty. Please read the attached license.
