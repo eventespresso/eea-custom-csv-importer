@@ -37,9 +37,9 @@
  * ------------------------------------------------------------------------
  */
 // define versions and this file
-define( 'EE_CUSTOM_CSV_IMPORTER_CORE_VERSION_REQUIRED', '4.8.0.rc.0000' );
-define( 'EE_CUSTOM_CSV_IMPORTER_VERSION', '1.0.0.dev.000' );
-define( 'EE_CUSTOM_CSV_IMPORTER_PLUGIN_FILE',  __FILE__ );
+define('EE_CUSTOM_CSV_IMPORTER_CORE_VERSION_REQUIRED', '4.8.0.rc.0000');
+define('EE_CUSTOM_CSV_IMPORTER_VERSION', '1.0.0.dev.000');
+define('EE_CUSTOM_CSV_IMPORTER_PLUGIN_FILE', __FILE__);
 
 
 
@@ -47,58 +47,62 @@ define( 'EE_CUSTOM_CSV_IMPORTER_PLUGIN_FILE',  __FILE__ );
 /**
  *    captures plugin activation errors for debugging
  */
-function espresso_custom_csv_importer_plugin_activation_errors() {
+function espresso_custom_csv_importer_plugin_activation_errors()
+{
 
-	if ( WP_DEBUG ) {
-		$activation_errors = ob_get_contents();
-		file_put_contents( EVENT_ESPRESSO_UPLOAD_DIR . 'logs' . DS . 'espresso_custom_csv_importer_plugin_activation_errors.html', $activation_errors );
-	}
+    if (WP_DEBUG) {
+        $activation_errors = ob_get_contents();
+        file_put_contents(EVENT_ESPRESSO_UPLOAD_DIR . 'logs' . DS . 'espresso_custom_csv_importer_plugin_activation_errors.html', $activation_errors);
+    }
 }
-add_action( 'activated_plugin', 'espresso_custom_csv_importer_plugin_activation_errors' );
+add_action('activated_plugin', 'espresso_custom_csv_importer_plugin_activation_errors');
 
 
 
 /**
  *    registers addon with EE core
  */
-function load_espresso_custom_csv_importer() {
-  if ( class_exists( 'EE_Addon' )) {
-      // custom_csv_importer version
-      require_once ( plugin_dir_path( __FILE__ ) . 'EE_Custom_Csv_Importer.class.php' );
-      EE_Custom_Csv_Importer::register_addon();
-  } else {
-    add_action( 'admin_notices', 'espresso_custom_csv_importer_activation_error' );
-  }
+function load_espresso_custom_csv_importer()
+{
+    if (class_exists('EE_Addon')) {
+        // custom_csv_importer version
+        require_once(plugin_dir_path(__FILE__) . 'EE_Custom_Csv_Importer.class.php');
+        EE_Custom_Csv_Importer::register_addon();
+    } else {
+      add_action('admin_notices', 'espresso_custom_csv_importer_activation_error');
+    }
 }
-add_action( 'AHEE__EE_System__load_espresso_addons', 'load_espresso_custom_csv_importer' );
+add_action('AHEE__EE_System__load_espresso_addons', 'load_espresso_custom_csv_importer');
 
 
 
 /**
  *    verifies that addon was activated
  */
-function espresso_custom_csv_importer_activation_check() {
-  if ( ! did_action( 'AHEE__EE_System__load_espresso_addons' ) ) {
-    add_action( 'admin_notices', 'espresso_custom_csv_importer_activation_error' );
-  }
+function espresso_custom_csv_importer_activation_check()
+{
+    if (! did_action('AHEE__EE_System__load_espresso_addons')) {
+      add_action('admin_notices', 'espresso_custom_csv_importer_activation_error');
+    }
 }
-add_action( 'init', 'espresso_custom_csv_importer_activation_check', 1 );
+add_action('init', 'espresso_custom_csv_importer_activation_check', 1);
 
 
 
 /**
  *    displays activation error admin notice
  */
-function espresso_custom_csv_importer_activation_error() {
-  unset( $_GET[ 'activate' ] );
-  unset( $_REQUEST[ 'activate' ] );
-  if ( ! function_exists( 'deactivate_plugins' ) ) {
-    require_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-  }
-  deactivate_plugins( plugin_basename( EE_CUSTOM_CSV_IMPORTER_PLUGIN_FILE ) );
-  ?>
+function espresso_custom_csv_importer_activation_error()
+{
+  unset($_GET['activate']);
+  unset($_REQUEST['activate']);
+    if (! function_exists('deactivate_plugins')) {
+      require_once(ABSPATH . 'wp-admin/includes/plugin.php');
+    }
+  deactivate_plugins(plugin_basename(EE_CUSTOM_CSV_IMPORTER_PLUGIN_FILE));
+    ?>
   <div class="error">
-    <p><?php printf( __( 'Event Espresso Custom CSV Importer could not be activated. Please ensure that Event Espresso version %1$s or higher is running', 'event_espresso' ), EE_CUSTOM_CSV_IMPORTER_CORE_VERSION_REQUIRED ); ?></p>
+    <p><?php printf(__('Event Espresso Custom CSV Importer could not be activated. Please ensure that Event Espresso version %1$s or higher is running', 'event_espresso'), EE_CUSTOM_CSV_IMPORTER_CORE_VERSION_REQUIRED); ?></p>
   </div>
 <?php
 }

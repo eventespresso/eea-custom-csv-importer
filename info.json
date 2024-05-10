@@ -1,15 +1,15 @@
 {
-	"versionFile" : "eea-custom-csv-importer.php",
-	"slug" : "eea-custom-csv-importer",
-	"name" : "Event Espresso 4 Custom CSV Importer",
-	"archiveBaseUrl" : "http://build.eventespresso.com/",
-	"archiveBasePath" : "~/www/build/",
-	"releaseFilesRemove" : [
-		"src/tests/**",
-		"src/info.json",
-		"src/circle.yml"
-	],
-	"github" : false,
-	"awsbucket" : "",
-	"awsregion" : ""
+  "versionFile": "eea-custom-csv-importer.php",
+  "slug": "eea-custom-csv-importer",
+  "name": "Event Espresso 4 Custom CSV Importer",
+  "archiveBaseUrl": "http://build.eventespresso.com/",
+  "archiveBasePath": "~/www/build/",
+  "releaseFilesRemove": [
+    "src/tests/**",
+    "src/info.json",
+    "src/circle.yml"
+  ],
+  "github": false,
+  "awsbucket": "",
+  "awsregion": ""
 }
